@@ -10,7 +10,7 @@ This repository contains the implementation and experimental code accompanying t
 ## Installation
 
 ```bash
-pip install numpy matplotlib
+pip install numpy
 ```
 
 ## How to Run
