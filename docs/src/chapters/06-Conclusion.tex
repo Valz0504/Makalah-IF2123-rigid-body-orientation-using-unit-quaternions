@@ -1,0 +1,8 @@
+\section{Conclusion}
+
+This paper has shown the representation of rigid-body orientation in three-dimensional space using unit quaternions. An implementation was developed to apply and compose rotations using unit quaternions, with rotation matrices included solely as a reference representation to support empirical validation.
+
+The experimental results demonstrate that unit quaternions provide a numerically stable representation of rigid-body orientation under repeated rotation and composition. The ability to maintain a valid orientation through simple normalization further reinforces the suitability of unit quaternions for long sequences of rotational operations. In addition, the experiments show that quaternion-based rotation composition can be performed more efficiently than matrix-based composition, reflecting the reduced parameterization and simpler algebraic structure of unit quaternions.
+
+These findings confirm that unit quaternions give an effective and practical representation for rigid-body orientation in $\mathbb{R}^3$. By combining numerical robustness, computational efficiency, and conceptual clarity, unit quaternions are well suited for applications that require reliable orientation handling, such as computer graphics, robotics, and simulation, where stable and efficient rotational representations are essential.
+

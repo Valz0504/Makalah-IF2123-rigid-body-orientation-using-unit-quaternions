@@ -1,0 +1,57 @@
+% main.tex
+\documentclass[conference]{IEEEtran}
+
+% ==================== PACKAGES ====================
+\input{config/packages}
+
+% ==================== CUSTOM SETTINGS ====================
+\input{config/settings}
+
+% ==================== DOCUMENT INFO ====================
+\input{config/info}
+
+\begin{document}
+
+% ==================== TITLE ====================
+\title{\paperTitle}
+
+% ==================== AUTHORS ====================
+\author{
+    \IEEEauthorblockN{\authorOneName}
+    \IEEEauthorblockA{
+        \textit{\authorOneDept} \\
+        \textit{\authorOneSchool} \\
+        \authorOneInst \\
+        \authorOneEmailOne, \authorOneEmailTwo
+    }
+}
+
+\maketitle
+
+\thispagestyle{fancy}
+\pagestyle{fancy}
+
+% ==================== ABSTRACT ====================
+\begin{abstract}
+\input{chapters/00-abstract}
+\end{abstract}
+
+% ==================== SECTIONS ====================
+\input{chapters/01-introduction}
+\input{chapters/02-theoretical-framework}
+\input{chapters/03-methods}
+\input{chapters/04-implementation}
+\input{chapters/05-experiment}
+\input{chapters/06-Conclusion}
+\input{chapters/07-appendix}
+\input{chapters/08-acknowledgement}
+
+% ==================== REFERENCES ====================
+\bibliographystyle{IEEEtran}
+\nocite{*}
+\bibliography{references/references}
+
+% statement
+\input{chapters/09-statement}
+
+\end{document}

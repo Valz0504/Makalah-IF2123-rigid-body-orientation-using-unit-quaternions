@@ -1,0 +1,46 @@
+\section{Methods}
+
+\subsection{Scope and Limitations}
+
+The author decided to only consider rotational motion of rigid bodies in three-dimensional Euclidean space $\mathbb{R}^3$. Translational motion, scaling, external disturbances, and dynamic effects are not included. All rotations are specified using axis--angle parameters, and all computations are carried out using double-precision floating-point arithmetic.
+
+The main objective is to evaluate unit quaternions as a mathematical representation of rigid-body orientation. Rotation matrices are included only as a reference baseline, in order to quantify numerical stability and computational efficiency behavior relative to unit quaternions.
+
+\subsection{Experimental Setup}
+
+All experiments are performed under a common setup to ensure a fair comparison between unit quaternions and rotation matrices.
+
+\begin{itemize}
+    \item Computational Environment: All simulations are implemented in Python~3 using standard numerical linear algebra routines for vector and matrix operations.
+    
+    \item Rotation Definition: Each rotation is specified by an axis--angle pair $(\mathbf{u}, \theta)$, where $\mathbf{u} \in \mathbb{R}^3$ is a unit vector representing the rotation axis and $\theta$ is the rotation angle.
+    
+    \item Input: The same axis--angle data are used to construct both rotation matrices and unit quaternions, ensuring that both representations describe the same geometric rotation.
+    
+    \item Rotation Matrices: For each axis--angle pair, a rotation matrix $R \in SO(3)$ is constructed and applied to a vector $\mathbf{v}$ using $\mathbf{v}' = R\mathbf{v}$. Composition of rotations is performed through matrix multiplication.
+    
+    \item Unit Quaternions: From the same axis--angle data, a unit quaternion
+    \[
+        q = \Bigl(\cos\frac{\theta}{2},\, \sin\frac{\theta}{2}\,\mathbf{u}\Bigr)
+    \]
+    is constructed. Vectors are embedded as pure quaternions and rotated using $p' = qpq^{-1}$ formula. Multiple rotations are composed by quaternion multiplication, with optional normalization to maintain unit length.
+\end{itemize}
+
+Based on this setup, two experiments are conducted to examine numerical stability and computational efficiency.
+
+\subsection{Numerical Stability Under Repeated Rotations}
+
+This experiment examines how numerical errors accumulate when the same rotation is applied repeatedly. A single rotation is defined using an axis--angle pair and represented both as a rotation matrix and as a unit quaternion. An initial vector in $\mathbb{R}^3$ is then rotated many times using each representation.
+
+For the quaternion-based method, the vector is updated using repeated applications of $v' = qvq^{-1}$ formula. For the matrix-based method, the same rotation is applied using repeated matrix vector multiplication, with an accumulated rotation matrix updated through matrix multiplication.
+
+After a large number of iterations, the deviation of the final vector from its expected direction is measured. In addition, for rotation matrices, the loss of orthogonality can be evaluated by measuring how far the accumulated matrix deviates from $SO(3)$. These measurements provide a direct comparison of numerical stability between the two representations.
+
+\subsection{Computational Cost of Rotation Composition}
+
+This experiment compares the computational effort required to compose multiple rotations into a single rotation. A sequence of rotations is specified using axis--angle data and converted into both unit quaternions and rotation matrices.
+
+For unit quaternions, composition is performed by successive quaternion multiplications starting from the identity quaternion. For rotation matrices, composition is performed by successive multiplication of $3 \times 3$ matrices starting from the identity matrix.
+
+The execution time required to compute the final composed rotation is recorded for both methods using the same number of rotations. This comparison highlights the difference in computational cost arising between unit quaternions and rotation matrix representation.
+

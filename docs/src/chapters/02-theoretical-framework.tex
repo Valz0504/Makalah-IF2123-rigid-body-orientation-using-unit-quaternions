@@ -1,0 +1,162 @@
+\section{Theoretical Framework}
+
+\subsection{Rigid-Body Rotational Motion in $\mathbb{R}^3$}
+
+A rigid motion of an object is a motion which preserves distance between
+points \cite{murray1994mathematical}. Consequently, any admissible motion of a rigid body must preserve both distances and angles between points. Transformations with this property are known as rigid-body transformations. When translational motion is excluded, such transformations reduce to pure rotations.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/rigid-object.png}
+    \caption{Rotation of a rigid object about a point. The dotted coordinate frame is attached to the rotating rigid body.}
+    {\footnotesize \textit{source: Adapted from \cite{murray1994mathematical}}}
+    \label{fig:rigid-body-rotation}
+\end{figure}
+
+Rigid-body orientation describes the rotational configuration of an object relative to a reference coordinate frame. Formally, orientation can be defined as the relative alignment between a body-fixed coordinate frame and an inertial frame. This alignment determines how the rigid body is rotated in space, independently of its position. Let $A$ be the inertial frame, $B$ the body frame, and $\mathbf{x}_{ab}, \mathbf{y}_{ab}, \mathbf{z}_{ab} \in \mathbb{R}^3$ the coordinates of the principal axes of $B$ relative to $A$ (see Fig.~\ref{fig:rigid-body-rotation}). Stacking these coordinate vectors next to each other, we define a $3 \times 3$ matrix:
+\begin{equation*}
+    R_{ab} = [\mathbf{x}_{ab} \quad \mathbf{y}_{ab} \quad \mathbf{z}_{ab}]
+\end{equation*}
+We call a matrix constructed in this manner a \textit{rotation matrix}: every rotation of the object relative to the ground corresponds to a matrix of this form \cite{murray1994mathematical}.
+
+A rotation matrix has two key properties that follow from its construction. Let $R \in \mathbb{R}^{3 \times 3}$ be a rotation matrix and $r_1, r_2, r_3 \in \mathbb{R}^3$ be its columns. Since the columns of $R$ are mutually orthonormal, the two properties are
+\begin{equation*}
+    RR^T = R^TR = I
+\end{equation*}
+and
+\begin{equation*}
+    \det(R) = +1
+\end{equation*}
+
+The set of all $3 \times 3$ matrices which satisfy these two properties is denoted $SO(3)$. The notation $SO$ abbreviates \textit{special orthogonal}. Special refers to the fact that $\det(R) = +1$ rather than $\pm1$ \cite{murray1994mathematical}. We define the space of rotation matrices in $\mathbb{R}^{3 \times 3}$ by
+\begin{equation*}
+    SO(3) = \{ R \in \mathbb{R}^{3 \times 3}: RR^T = R^TR = I, \space \det(R) = +1 \}
+\end{equation*}
+
+Rotation matrices also define linear transformations between coordinate frames~\cite{murray1994mathematical}. Let $\mathbf{q}_b$ denote the coordinates of a point in body frame $B$. Then its coordinates in inertial frame $A$ are given by $\mathbf{q}_a = R_{ab}\mathbf{q}_b$. Multiple rotations compose via matrix multiplication: $R_{ac} = R_{ab}R_{bc}$~\cite{murray1994mathematical}, reflecting the group structure of $SO(3)$.
+
+A fundamental result in rotation theory, known as Euler's theorem, states that any rotation in $\mathbb{R}^3$ can be represented as a rotation about a fixed axis by a certain angle~\cite{murray1994mathematical}. While rotation matrices provide a complete description of orientation, they require nine parameters to represent only three degrees of freedom. Unit quaternions offer a more compact and numerically stable encoding.
+
+
+\subsection{Quaternion Algebra}
+
+Quaternion extended the concept of complex numbers to four dimensions, that is why we will review complex algebra, from which quaternions are naturally generalized.
+
+\subsubsection{Complex Algebra}
+A complex number takes the form
+\begin{equation*}
+    z = a + ib
+\end{equation*}
+where 
+\begin{center}
+    $a$ is the real part, \\
+    $b$ is the imaginary part, and \\
+    $i = \sqrt{-1}$
+\end{center}
+for example
+\begin{center}
+    $z = 5 + 6i$, \\
+    $z = 6 - 13i$, \\
+    etc
+\end{center}
+
+Either part may be zero, which implies that the set of real numbers $\mathbb{R}$ is a subset of complex numbers $\mathbb{C}$ \cite{vince2008geometric, munir2025_aljabar_kompleks}.
+
+The conjugate of a complex number $z = a + ib$ is defined as
+\begin{equation*}
+    z^* = a - ib
+\end{equation*}
+
+Complex multiplication follows the rule $i^2 = -1$. Given two complex numbers $z_1 = a_1 + ib_1$ and $z_2 = a_2 + ib_2$, their product is
+\begin{equation*}
+    z_1 z_2 = (a_1 a_2 - b_1 b_2) + i(a_1 b_2 + a_2 b_1)
+\end{equation*}
+
+The magnitude (or modulus) of a complex number is given by
+\begin{equation*}
+    |z| = \sqrt{a^2 + b^2} = \sqrt{zz^*}
+\end{equation*}
+
+A unit complex number satisfies $|z| = 1$, which can be expressed in polar form as $z = \cos\theta + i\sin\theta = e^{i\theta}$, representing a rotation by angle $\theta$ in the two-dimensional plane.
+
+\subsubsection{Introduction to Quaternion}
+Quaternions were introduced by Sir William Rowan Hamilton as an extension of complex numbers from the two-dimensional plane $\mathbb{R}^2$ to a four-dimensional algebra over $\mathbb{R}$ \cite{gallier2025linear,vince2008geometric}. Knowing that a complex number in $\mathbb{R}^2$ has the form
+\begin{equation*}
+    z = a + ib
+\end{equation*}
+it is reasonable to presume that a complex number in $\mathbb{R}^3$ should take the form
+\begin{equation*}
+    z = a + ib + jc
+\end{equation*}
+where $i$ and $j$ are unit imaginaries: $i^2 = j^2 = -1$. However, when two such objects are multiplied together we have
+\begin{equation*}
+    z_1z_2 = (a_1+ib_1+jc_1)(a_2+ib_2+jc_2)
+\end{equation*}
+which expands to
+\begin{align*}
+    z_1z_2 &= (a_1a_2-b_1b_2-c_1c_2) \\
+    & \quad +\space i(a_1b_2 + b_1a_2) + j(a_1c_2+c_1a_2) + ijb_1c_2 + jic_1b_2
+\end{align*}
+leaving the terms $ij$ and $ji$ undefined \cite{vince2008geometric, munir2025_quaternion_1}. 
+
+Hamilton then extended the triple to a 4-tuple:
+\begin{equation*}
+    z = a + ib + jc + kd.
+\end{equation*}
+When two such objects are multiplied together, while substituting $i^2 = j^2 = k^2 = -1$ and using the multiplication rules
+\begin{equation*}
+    ij = k \quad jk = i \quad ki = j \quad ji = -k \quad kj = -i \quad ik = -j
+\end{equation*}
+we have
+\begin{equation*}
+    z_1z_2 = (a_1 + ib_1 + jc_1 + kd_1)(a_2+ib_2+jc_2+kd_2)
+\end{equation*}
+simplifies to
+\begin{align*}
+    z_1z_2 &= a_1a_2 - (b_1b_2+c_1c_2+d_1d_2) \\
+    & \quad +\space a_1(ib_2+jc_2+kd_2) + a_2(ib_1+jc_1+kd_1) \\
+    & \quad +\space i(c_1d_2-d_1c_2) + j(d_1b_2-b_1d_2) + k(b_1c_2-c_1b_2)
+\end{align*}
+which shows that the product of two quaternions is again a quaternion \cite{gallier2025linear,vince2008geometric}.
+
+A quaternion $q = a + ib + jc + kd$ can be written as
+\begin{equation*}
+    q = (a, \mathbf{v}),
+\end{equation*}
+where $a \in \mathbb{R}$ is called the scalar part and $\mathbf{v} = (b, c, d) \in \mathbb{R}^3$ is called the vector part \cite{vince2008geometric,gallier2025linear}. The conjugate of $q$ is defined as
+\begin{equation*}
+    q^* = a - ib - jc - kd,
+\end{equation*}
+and the norm of $q$ is given by
+\begin{equation*}
+    \lVert q \rVert = \sqrt{a^2 + b^2 + c^2 + d^2} = \sqrt{q q^*} \cite{gallier2025linear}.
+\end{equation*}
+Quaternions with unit norm, $\lVert q \rVert = 1$, are called unit quaternions and form the basis for representing three-dimensional rotations in subsequent sections \cite{gallier2025linear,vince2008geometric}.
+
+\subsubsection{Quaternion Rotations and SO(3)}
+
+A three-dimensional vector $\mathbf{v} = (v_x, v_y, v_z)$ can be represented as a \emph{pure quaternion}
+\begin{equation*}
+    p = 0 + v_x i + v_y j + v_z k,
+\end{equation*}
+that is, a quaternion whose scalar part is zero. In this way, the usual vectors in $\mathbb{R}^3$ can be viewed as a special subset of the quaternions \cite{gallier2025linear}.
+
+To describe rotations, unit quaternions are used, any unit quaternion can be written in the form
+\begin{equation*}
+    q = \cos\frac{\theta}{2} + \sin\frac{\theta}{2}\,(u_x i + u_y j + u_z k),
+\end{equation*}
+where $\theta$ is a rotation angle and $\mathbf{u} = (u_x, u_y, u_z)$ is a unit vector giving the axis of rotation \cite{gallier2025linear}. This shows that a three-dimensional rotation can be encoded by one axis and one angle.
+
+If a vector $\mathbf{v}$ is represented as the pure quaternion $p$, the rotated vector $\mathbf{v}'$ is obtained by the operation
+\begin{equation*}
+    v' = qvq^{-1},
+    \label{eq:quat_sandwich_simple}
+\end{equation*}
+where $q$ is a unit quaternion and $q^{-1}$ is its inverse \cite{gallier2025linear, munir2025_quaternion_2}. The imaginary part of $p'$ gives the new vector $\mathbf{v}'$, and the length of the vector is preserved, so this operation defines a genuine rotation in $\mathbb{R}^3$.
+
+This quaternion-based rotation can also be written using a $3 \times 3$ rotation matrix. For every unit quaternion $q$, there is an associated rotation matrix $R(q)$ such that
+\begin{equation*}
+    \mathbf{v}' = R(q)\,\mathbf{v},
+\end{equation*}
+and this matrix is always orthogonal with determinant one, hence it lies in $SO(3)$ \cite{gallier2025linear}. Unit quaternions therefore provide a compact and singularity-free way to represent three-dimensional rotations, while composition of rotations corresponds simply to quaternion multiplication.
+

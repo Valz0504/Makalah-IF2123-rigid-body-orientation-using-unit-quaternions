@@ -1,0 +1,53 @@
+\section{Experiment}
+
+\subsection{Test Cases}
+
+The author has designed three test cases to evaluate the behavior of unit quaternions under different rotational conditions. Each test case specifies a rotation axis, a rotation angle, and parameters controlling the number of repeated iteration or rotation.
+
+For each test case, identical axis--angle parameters are used to construct both the unit quaternion representation and the corresponding rotation matrix. This ensures that any observed differences in numerical stability or computational efficiency arise solely from the underlying mathematical representation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/test-case.png}
+    \caption{Test Cases}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:test-case}
+\end{figure}
+
+\subsection{Test Case 1}
+
+In this test case, a small rotation of $5^\circ$ is applied repeatedly for 50{,}000 iterations about a normalized axis $(1,2,3)$. The results show that both unit quaternions and rotation matrices produce identical final vector orientations, matching the expected rotation outcome with numerical errors on the order of $10^{-12}$ (see Fig.~\ref{fig:tc-1-output}). This indicates that both representations exhibit strong numerical stability under repeated rotation. Although the rotation matrix approach yields a slightly smaller final error, the difference is not practically significant, and the loss of orthogonality remains negligible. In terms of computational performance, rotation composition using unit quaternions is approximately $1.81\times$ faster than using rotation matrices, highlighting the efficiency advantage of unit quaternions for repeated rigid-body orientation updates.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/tc-1.png}
+    \caption{Test Case 1 Output}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:tc-1-output}
+\end{figure}
+
+\subsection{Test Case 2}
+
+In this test case, a larger rotation of $45^\circ$ about the $y$-axis is applied repeatedly for 10{,}000 iterations. The results show that both unit quaternions and rotation matrices produce identical final vector orientations, matching the expected rotation outcome with numerical errors on the order of $10^{-13}$ (see Fig.~\ref{fig:tc-2-output}). Unit quaternion approach exhibits a lower final error than the rotation matrix method. The orthogonality deviation of the accumulated rotation matrix remains negligible. In terms of performance, unit quaternions again outperform rotation matrices, achieving approximately a $1.8\times$ speedup in rotation composition.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/tc-2.png}
+    \caption{Test Case 2 Output}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:tc-2-output}
+\end{figure}
+
+\subsection{Test Case 3}
+
+In this test case, a small rotation of $1^\circ$ about an arbitrary axis $(1,1,1)$ is applied repeatedly for 100{,}000 iterations. Despite the large number of repeated rotations, both unit quaternions and rotation matrices produce identical final vector orientations, matching the expected rotation outcome with numerical errors on the order of $10^{-12}$ (see Fig.~\ref{fig:tc-3-output}). This demonstrates that both representations maintain good numerical stability even under heavy iterative composition. However, the accumulated rotation matrix exhibits a larger loss of orthogonality compared to previous test cases. In terms of computational efficiency, unit quaternions remain consistently faster, achieving approximately a $1.76\times$ speedup over rotation matrices.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/tc-3.png}
+    \caption{Test Case 3 Output}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:tc-3-output}
+\end{figure}
+
+

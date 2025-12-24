@@ -1,0 +1,52 @@
+\section{Implementation}
+
+\subsection{Quaternion Class Declaration}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/quaternion-class.png}
+    \caption{Quaternion Class Declaration}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:quaternion-class}
+\end{figure}
+
+The code shown in Fig.~\ref{fig:quaternion-class} implements a \texttt{Quaternion} class used to represent rigid-body orientation in $\mathbb{R}^3$. The class stores the scalar and vector components of a quaternion and provides essential operations such as quaternion multiplication, conjugation, normalization, vector rotation, etc. 
+
+\subsection{Rotation Matrix Declaration}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/rotation-matrix.png}
+    \caption{Rotation Matrix Builder Function}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:rotation-matrix}
+\end{figure}
+
+The code shown in Fig.~\ref{fig:rotation-matrix} implements a function for constructing a $3 \times 3$ rotation matrix from an axis--angle. The resulting matrix belongs to the special orthogonal group $SO(3)$ and represents the same geometric rotation as the corresponding unit quaternion. This matrix-based implementation is included as a baseline for comparison with the quaternion-based approach.
+
+\subsection{Numerical Stability Test}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{figures/numerical-stability.png}
+    \caption{Numerical Stability Function}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:numerical-stability}
+\end{figure}
+
+The code shown in Fig.~\ref{fig:numerical-stability} implements the numerical stability experiment described in the Methods section. A fixed axis--angle rotation is applied repeatedly to an initial vector using both unit quaternions and rotation matrices. The experiment evaluates the accumulation of numerical errors by comparing the final rotated vectors with the expected theoretical result, as well as by measuring the loss of orthogonality in the accumulated rotation matrix.
+
+\subsection{Computation Efficiency Test}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/computation-efficiency.png}
+    \caption{Computation Efficiency Function}
+    {\footnotesize \textit{source: Author's archive}}
+    \label{fig:computation-efficiency}
+\end{figure}
+
+The code shown in Fig.~\ref{fig:computation-efficiency} implements the computational efficiency experiment for rotation composition. A sequence of rotations is composed using both quaternion multiplication and matrix multiplication, and the execution time of each method is recorded.
+
+\noindent
+The full implementation code used in this section can be reviewed in the appendix.
